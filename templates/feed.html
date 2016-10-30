@@ -1,0 +1,36 @@
+<html>
+    <head>
+        <title>Feed</title>
+        <h1>Feed</h1>
+        <script src="../static/jquery.min.js"></script>
+    </head>
+     <body>
+          <script type="text/javascript">
+            function repost(post_id) {
+                $.post("/feed/", {"post_id":post_id});
+            }
+        </script>
+      {% if "login" not in session %}
+            <a href="/login/">Login</a> <a href="/register/">Register</a>
+        {% else %}
+            <h3>Hello, {{ session['login'] }}</h3>
+            <a href="/post/">Post</a>
+        {% endif %}
+        <br/><br/>
+        {% for x in feed %}
+        <p>
+        <div class="post" id="{{ x['post_id'] }}">
+            <div class="text"> {{ x['text'] }} </div>
+            {{ x['username'] }} | <button onClick="repost('{{ x['post_id'] }}')">Repost ({{ x['reposts'] }})</button>
+        </div>
+        </p>
+        {% endfor %}
+
+        <script type="text/javascript">
+            function repost(post_id) {
+                $.post("/feed/", {"post_id":post_id});
+            }
+        </script>
+   </body>
+</html>
+
